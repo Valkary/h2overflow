@@ -20,17 +20,17 @@
 
         <div class="container gap-4">
           <div class="row my-3">
-            <div class="col col-4">
+            <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Fixed plumbing">
               <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#plumbingModal">
-                <img src="../svgs/pipe.svg" alt="pipesss" width="100%">
+                  <img src="../svgs/pipe.svg" alt="pipesss" width="100%">
               </button>
             </div>
-            <div class="col col-4">
+            <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shower under 5 min">
               <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#showerModal">
                 <img src="../svgs/shower.svg" alt="shower" width="100%">
               </button>
             </div>
-            <div class="col col-4">
+            <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Dishwasher">
               <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
                 <img src="../svgs/dishwasher.svg" alt="dishwasher" width="100%">
               </button>
@@ -38,17 +38,17 @@
           </div>
 
           <div class="row my-3">
-            <div class="col col-4">
+            <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Water tap">
               <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
                 <img src="../svgs/water-tap.svg" alt="tap" width="100%">
               </button>
             </div>
-            <div class="col col-4">
+            <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clean dishes">
               <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
                 <img src="../svgs/plate.svg" alt="plates" width="100%">
               </button>
             </div>
-            <div class="col col-4">
+            <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Wash hands">
               <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
                 <img src="../svgs/hand-washsvg.svg" alt="hand wash" width="100%">
               </button>
@@ -260,6 +260,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+
+  <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
 </body>
 
 </html>
