@@ -11,7 +11,34 @@
 </head>
 
 <body>
-  <h1>Daily Entry</h1>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-right">
+    <div class="container-fluid">
+      <a class="logo navbar-brand mb-0 h1" href="index.html">
+        <img class="logo " src="/images/gota.png">
+        H<sub>2</sub>O<sub>verflow</sub>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="tab nav-link active" aria-current="page" href="/index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="tab nav-link active" aria-current="page" href="/monthly_stats/month.html">Stats</a>
+          </li>
+          <li class="nav-item">
+            <a class="tab nav-link active" aria-current="page" href="/data_entry/data.html">DataEntry</a>
+          </li>
+          <li class="nav-item">
+            <a class="tab nav-link active" aria-current="page" href="/profile/profile.html">Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div class="container">
     <div class="row">
@@ -22,7 +49,7 @@
           <div class="row my-3">
             <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Fixed plumbing">
               <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#plumbingModal">
-                  <img src="../svgs/pipe.svg" alt="pipesss" width="100%">
+                <img src="../svgs/pipe.svg" alt="pipesss" width="100%">
               </button>
             </div>
             <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shower under 5 min">
