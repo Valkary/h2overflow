@@ -21,7 +21,8 @@ img.logo{
 }
 
 nav.st{
-    padding: 10px 10px 10px 20px;
+    /* padding: 10px 10px 10px 20px; */
+    height: 10%;
 }
 
 a.logo{
@@ -30,4 +31,29 @@ a.logo{
 
 a.tab{
     font-size: 20px;
+}
+
+div.container-principal{
+    height: 2000px
+}
+
+div.video{
+    height: fit-content;
+    width: fit-content;
+    padding: 10px 10px 10px 10px;
+    background-color: black;
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+}
+video.principal{
+    width: 100%;
+    z-index: -1;
+}
+
+h1.video{
+    position: absolute;
 }
