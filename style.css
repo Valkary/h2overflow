@@ -33,7 +33,7 @@ a.tab{
 }
 
 div.containerPrincipal{
-    height: 2000px
+    height: fit-content;
 }
 
 div.video{
@@ -91,7 +91,6 @@ a.backToTop:hover{
 
 img.placeholder{
     height: 200px;
-    aspect-ratio: 1/1;
 }
 
 div.content{
