@@ -32,13 +32,13 @@ a.tab{
     font-size: 20px;
 }
 
-div.container-principal{
+div.containerPrincipal{
     height: 2000px
 }
 
 div.video{
-    width: fit-content;
-    aspect-ratio: 3.25/1;
+    width: 100%;
+    aspect-ratio: 3.65/1;
     padding: 0;
     background-color: black;
     color: aliceblue;
@@ -52,10 +52,6 @@ div.video{
 video.principal{
     width: 100%;
     z-index: -1;
-}
-
-.video{
-    position: absolute;
 }
 
 h1.ctoa{
@@ -72,4 +68,27 @@ a.ctoa{
 
 a.ctoa:hover{
     background-color: #4472CA;
+}
+
+div.footer{
+    height: fit-content;
+    background-color: black;
+    color: aliceblue;
+    padding: 20px;
+    text-align: center
+}
+
+a.backToTop{
+    color: var(--bg);
+    text-decoration: none;
+}
+a.backToTop:hover{
+    background-color: #0A369D;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+img.placeholder{
+    height: 100px;
+    aspect-ratio: 1/1;
 }
