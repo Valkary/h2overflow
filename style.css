@@ -21,7 +21,6 @@ img.logo{
 }
 
 nav.st{
-    /* padding: 10px 10px 10px 20px; */
     height: 10%;
 }
 
@@ -38,22 +37,39 @@ div.container-principal{
 }
 
 div.video{
-    height: fit-content;
     width: fit-content;
-    padding: 10px 10px 10px 10px;
+    aspect-ratio: 3.25/1;
+    padding: 0;
     background-color: black;
     color: aliceblue;
     display: flex;
     justify-content: center;
     text-align: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
 }
 video.principal{
     width: 100%;
     z-index: -1;
 }
 
-h1.video{
+.video{
     position: absolute;
+}
+
+h1.ctoa{
+    color: aliceblue;
+}
+
+a.ctoa{
+    display: inline-block;
+    text-decoration: none;
+    background-color: #0A369D;
+    border-radius: 10px;
+    padding: 0 5px;
+}
+
+a.ctoa:hover{
+    background-color: #4472CA;
 }
