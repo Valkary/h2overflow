@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,500;0,600;1,200&display=swap');
+
+:root {
+    --main: #0A369D;
+    --secondary: #4472CA;
+    --details: #5E7CE2;
+    --details-light: #92B4F4;
+    --bg: #CFDEE7;
+}
+
+body{
+    font-family: 'Urbanist', sans-serif;
+    background-color: var(--bg);
+}
+.bg{
+    background-image: url(wbg.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+}
