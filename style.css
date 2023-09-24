@@ -75,7 +75,8 @@ div.footer{
     background-color: black;
     color: aliceblue;
     padding: 20px;
-    text-align: center
+    text-align: center;
+    margin: 0;
 }
 
 a.backToTop{
@@ -89,6 +90,15 @@ a.backToTop:hover{
 }
 
 img.placeholder{
-    height: 100px;
+    height: 200px;
     aspect-ratio: 1/1;
+}
+
+div.content{
+    margin: 50px 0;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
