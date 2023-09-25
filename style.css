@@ -31,3 +31,18 @@ a.logo{
 a.tab{
     font-size: 20px;
 }
+
+.main-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+.underline {
+    text-decoration: underline 2px solid var(--details);
+}
