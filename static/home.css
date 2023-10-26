@@ -59,7 +59,8 @@ video.principal {
     z-index: -1;
 }
 
-h1.ctoa {
+.ctoa {
+    font-weight: bolder;
     color: aliceblue;
 }
 
