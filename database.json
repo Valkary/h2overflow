@@ -1,5 +1,5 @@
 {
-    "id_count": 1,
+    "id_count": 2,
     "users": {
         "pepe@gmail.com": {
             "id": 2,
@@ -9,7 +9,7 @@
         "pepoclesng@gmail.com": {
             "id": 2,
             "name": "ElPepe",
-            "password": "$2b$10$kkpXYO/mTomAUY2k7IfH/.rLa4V72MroywQ2JcVroVZTJweWCMrRa"
+            "password": "$2b$10$68MdmmkYx0IVV4eq.Czj1uxUX/9iNKEg1JKanipGsBfwQVOMoK6.y"
         }
     },
     "records": {

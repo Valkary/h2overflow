@@ -19,7 +19,7 @@ let user = {
     id: "",
 };
 
-const db = JSON.parse(await fs.readFile("./database.json"));
+let db = JSON.parse(await fs.readFile("./database.json"));
 
 async function validateUser(email, password) {
     if (email in db.users) {
@@ -55,19 +55,20 @@ async function createUser(email, password, name) {
 
         const id_count = db.id_count;
 
-        const database_obj = db;
-
-        database_obj.users[email] = {
+        db.users[email] = {
             id: id_count + 1,
             name,
             password: hash
         }
 
-        await fs.writeFile("./database.json", JSON.stringify(database_obj));
+        db.id_count = db.id_count + 1;
+
+        await fs.writeFile("./database.json", JSON.stringify(db));
 
         return true;
     } catch (err) {
         console.error("==> Error creating user! Try again later");
+        console.error(err);
         return false;
     }
 }
