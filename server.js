@@ -27,12 +27,14 @@ async function validateUser(email, password) {
             user.email = email;
             user.name = db.users[email].name;
             user.id = db.users[email].id;
-    
+
             console.log(`Succesfully logged in as ${db.users[email].name}!`);
-            
+
             return true;
         } else {
             console.log(`Password validation error!`);
+
+            return false;
         }
     }
 
@@ -73,7 +75,7 @@ async function createUser(email, password, name) {
     }
 }
 
-// createUser("pepoclesng@gmail.com", "holamundo", "ElPepe");
+// createUser("tisk@gmail.com", "pene", "Comes");
 
 // index page
 app.get('/', function (req, res) {
@@ -91,16 +93,29 @@ app.get("/login", function (req, res) {
 
 app.get("/monthly_stats", function (req, res) {
     console.log("==> Monthly stats!");
-    if (!authUser()) return res.redirect("/login");
+    if (!authUser()) {
+        res.redirect("/login");
+        return;
+    }
 
     res.render("pages/month", { user });
+});
+
+app.get("/data_entry", function (req, res) {
+    console.log("==> Data entry!");
+    if (!authUser()) {
+        res.redirect("/login");
+        return;
+    }
+
+    res.render("pages/data", { user });
 });
 
 app.post("/auth/login", async function (req, res) {
     console.log("Requesting auth");
 
     if (req.body?.email && req.body?.password) {
-        if(await validateUser(req.body.email, req.body.password)) {
+        if (await validateUser(req.body.email, req.body.password)) {
             res.redirect("/monthly_stats");
             return;
         }

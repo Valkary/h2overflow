@@ -1,8 +1,8 @@
 {
-    "id_count": 2,
+    "id_count": 3,
     "users": {
         "pepe@gmail.com": {
-            "id": 2,
+            "id": 1,
             "name": "Pepe",
             "password": "$2b$10$HSGESDvCq4NCRXrYlaNRLORaq9WmNuMJ4rCLJnQaJUsukGdaB900K"
         },
@@ -10,6 +10,11 @@
             "id": 2,
             "name": "ElPepe",
             "password": "$2b$10$68MdmmkYx0IVV4eq.Czj1uxUX/9iNKEg1JKanipGsBfwQVOMoK6.y"
+        },
+        "tisk@gmail.com": {
+            "id": 3,
+            "name": "Comes",
+            "password": "$2b$10$RxWkd.5TnpZyokmkvsbI7u0GFWqi9F5.A59wS5ZVZDm.YhWAFtys2"
         }
     },
     "records": {
