@@ -2,6 +2,8 @@ import express from 'express';
 import fs from "fs/promises";
 import bcrypt from "bcrypt";
 
+import { activities } from './constants.js';
+
 const app = express();
 
 const salt_rounds = 10;
@@ -75,8 +77,6 @@ async function createUser(email, password, name) {
     }
 }
 
-// createUser("tisk@gmail.com", "pene", "Comes");
-
 // index page
 app.get('/', function (req, res) {
     console.log("==> Requesting home");
@@ -108,7 +108,7 @@ app.get("/data_entry", function (req, res) {
         return;
     }
 
-    res.render("pages/data", { user });
+    res.render("pages/data", { user, activities });
 });
 
 app.post("/auth/login", async function (req, res) {
