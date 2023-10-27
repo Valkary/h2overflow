@@ -1,0 +1,18 @@
+{
+    "id_count": 1,
+    "users": {
+        "pepe@gmail.com": {
+            "id": 2,
+            "name": "Pepe",
+            "password": "$2b$10$HSGESDvCq4NCRXrYlaNRLORaq9WmNuMJ4rCLJnQaJUsukGdaB900K"
+        },
+        "pepoclesng@gmail.com": {
+            "id": 2,
+            "name": "ElPepe",
+            "password": "$2b$10$kkpXYO/mTomAUY2k7IfH/.rLa4V72MroywQ2JcVroVZTJweWCMrRa"
+        }
+    },
+    "records": {
+        "0": []
+    }
+}

@@ -12,9 +12,9 @@
 </head>
 
 <body>
-  <%- include("../components/navbar.ejs"); %>
+  <%- include("../components/navbar.ejs", { user }); %>
   <div class="container">
-    <h1><strong>Your monthly stats</strong></h1>
+    <h1><strong>Your monthly stats <%= user.name  %>!</strong></h1>
 
     <h3 id="progress-text">Your progress:</h3>
 

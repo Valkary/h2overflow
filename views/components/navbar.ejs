@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-right">
     <link rel="stylesheet" href="/navbar.css">
     <div class="container-fluid">
-        <a class="logo navbar-brand mb-0 h1" href="index.html">
+        <a class="logo navbar-brand mb-0 h1" href="/">
             <img class="logo " src="/images/gota.png">
             H<sub>2</sub>O<sub>verflow</sub>
         </a>
@@ -20,12 +20,12 @@
                 <li class="nav-item">
                     <a class="tab nav-link active" aria-current="page" href="/data_entry">DataEntry</a>
                 </li>
-                <% if (!locals.username) { %>
+                <% if (!user?.username) { %>
                     <li class="nav-item">
                         <a class="tab nav-link active" aria-current="page" href="/login">Profile</a>
                     </li>
                     <% } else { %>
-                        <p>Bienvenido <%= locals.username %></p>
+                        <a class="tab nav-link active" aria-current="page" href="/profile">Profile</a>
                         <% } %>
             </ul>
         </div>
