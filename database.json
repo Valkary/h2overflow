@@ -18,14 +18,6 @@
             "lastname": "Salcedo",
             "unit": "l/ml",
             "lang": "english"
-        },
-        "tisk@gmail.com": {
-            "id": 4,
-            "name": "David",
-            "password": "$2b$10$a.Wc00STvwR5YRfzGVWX6.rj7abc53AjMtPbZPytjrlmV7RMwpSDO",
-            "lastname": "Tiscareño",
-            "unit": "l/ml",
-            "lang": "english"
         }
     },
     "records": {

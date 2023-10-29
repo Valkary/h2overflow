@@ -124,7 +124,12 @@ app.post("/auth/login", async function (req, res) {
     res.redirect("/");
 });
 
-app.get('/profile', function (req, res) {;
+app.get('/profile', function (req, res) {
+    if (!authUser()) {
+        res.redirect("/login");
+        return;
+    }
+
     res.render("pages/profile", {user});
 }).post('/save_settings', async function(req,res) {
     console.log("==> Save settings!");
@@ -154,6 +159,26 @@ app.get('/profile', function (req, res) {;
     }
 
     res.render("pages/profile", {user});
+}).post("/logout", function (_, res) {
+    user = {
+        email: "",
+        name: "",
+        id: "",
+    };
+
+    res.redirect("/login");
+}).post("/del_acc", async function (_, res) {
+    delete db.users[user.email];
+
+    user = {
+        email: "",
+        name: "",
+        id: "",
+    };
+
+    await fs.writeFile("./database.json", JSON.stringify(db));
+
+    res.redirect("/login");
 });
 
 app.listen(8080);
