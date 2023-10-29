@@ -15,12 +15,6 @@ app.set('view engine', 'ejs');
 app.use(express.static("static"));
 app.use(express.urlencoded({ extended: true }));
 
-let user = {
-    email: "",
-    name: "",
-    id: "",
-};
-
 /**
 * @typedef {{
 *   id_count: number,
@@ -40,10 +34,33 @@ let user = {
 */
 
 /**
+* @typedef {{
+*   email: string,
+*   name: string,
+*   id: string
+* }} User
+*/
+
+/**
+ * @type {User}
+ */
+let user = {
+    email: "",
+    name: "",
+    id: "",
+};
+
+/**
  * @type {Database}
  */
 let db = JSON.parse(await fs.readFile("./database.json"));
 
+/**
+ * 
+ * @param {string} email 
+ * @param {string} password 
+ * @returns 
+ */
 async function validateUser(email, password) {
     if (email in db.users) {
         if (await bcrypt.compare(password, db.users[email].password)) {
@@ -140,7 +157,7 @@ app.get("/monthly_stats", function (_, res) {
 
         for (let i = 0; i < month_activities.length; i++) {
             const day_activities = db.records[user.id][month_activities[i]];
-            let saved_water = 0; 
+            let saved_water = 0;
 
             for (let j = 0; j < day_activities.length; j++) {
                 saved_water += day_activities[j];
@@ -148,7 +165,7 @@ app.get("/monthly_stats", function (_, res) {
 
             res[month_activities[i]] = saved_water;
         }
-        
+
         res.render("pages/month", { user, month: res });
     }
 
