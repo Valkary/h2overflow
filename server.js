@@ -124,5 +124,11 @@ app.post("/auth/login", async function (req, res) {
     res.redirect("/");
 });
 
+app.get('/profile', function (req, res) {;
+    res.render("pages/profile", {user});
+}).post('/save_settings', function(req,res) {
+    
+});
+
 app.listen(8080);
 console.log('Server is listening on port http://localhost:8080/');
