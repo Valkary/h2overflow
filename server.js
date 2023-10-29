@@ -75,7 +75,7 @@ async function createUser(email, password, name) {
     }
 }
 
-// createUser("tisk@gmail.com", "pene", "Comes");
+// createUser("tisk@gmail.com", "pass", "Comes");
 
 // index page
 app.get('/', function (req, res) {
@@ -126,8 +126,34 @@ app.post("/auth/login", async function (req, res) {
 
 app.get('/profile', function (req, res) {;
     res.render("pages/profile", {user});
-}).post('/save_settings', function(req,res) {
+}).post('/save_settings', async function(req,res) {
+    console.log("==> Save settings!");
+
+    const { firstname, lastname, email, unit, lang } = req.body;
+
+    try {
+        const prev = db.users[user.email];
+
+        delete db.users[user.email];
+
+        db.users[email] = {
+            ...prev,
+            id: user.id,
+            name: firstname,
+            lastname,
+            unit,
+            lang
+        }
+        
+        user.email = email;
     
+        await fs.writeFile("./database.json", JSON.stringify(db));
+    } catch (err) {
+        console.error(err);
+        res.render("pages/profile");
+    }
+
+    res.render("pages/profile", {user});
 });
 
 app.listen(8080);

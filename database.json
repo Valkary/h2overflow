@@ -1,5 +1,5 @@
 {
-    "id_count": 3,
+    "id_count": 4,
     "users": {
         "pepe@gmail.com": {
             "id": 1,
@@ -11,10 +11,21 @@
             "name": "ElPepe",
             "password": "$2b$10$68MdmmkYx0IVV4eq.Czj1uxUX/9iNKEg1JKanipGsBfwQVOMoK6.y"
         },
-        "tisk@gmail.com": {
+        "pepito@gmail.com": {
             "id": 3,
-            "name": "Comes",
-            "password": "$2b$10$RxWkd.5TnpZyokmkvsbI7u0GFWqi9F5.A59wS5ZVZDm.YhWAFtys2"
+            "name": "Pepito",
+            "password": "$2b$10$RxWkd.5TnpZyokmkvsbI7u0GFWqi9F5.A59wS5ZVZDm.YhWAFtys2",
+            "lastname": "Salcedo",
+            "unit": "l/ml",
+            "lang": "english"
+        },
+        "tisk@gmail.com": {
+            "id": 4,
+            "name": "David",
+            "password": "$2b$10$a.Wc00STvwR5YRfzGVWX6.rj7abc53AjMtPbZPytjrlmV7RMwpSDO",
+            "lastname": "Tiscareño",
+            "unit": "l/ml",
+            "lang": "english"
         }
     },
     "records": {
