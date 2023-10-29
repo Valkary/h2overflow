@@ -1,5 +1,5 @@
 {
-    "id_count": 3,
+    "id_count": 4,
     "users": {
         "pepe@gmail.com": {
             "id": 1,
@@ -15,9 +15,20 @@
             "id": 3,
             "name": "Comes",
             "password": "$2b$10$RxWkd.5TnpZyokmkvsbI7u0GFWqi9F5.A59wS5ZVZDm.YhWAFtys2"
+        },
+        "arreola@gmail.com": {
+            "id": 4,
+            "name": "Santiago",
+            "password": "$2b$10$sitPpJdMX8tMeob8.WZEde.MzA08AICMgLUnAQ8XHXVDJ3bIP3Lli"
         }
     },
     "records": {
-        "0": []
+        "3": {
+            "1698537600000": [
+                3,
+                5,
+                0.5
+            ]
+        }
     }
 }

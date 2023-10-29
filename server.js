@@ -21,6 +21,27 @@ let user = {
     id: "",
 };
 
+/**
+* @typedef {{
+*   id_count: number,
+*   users: {
+*     [email: string]: {
+*       id: number,
+*       name: string,
+*       password: string
+*     }
+*   },
+*   records: {
+*     [userId: string]: {
+*       [timestamp: number]: [number]
+*     }
+*   }
+* }} Database
+*/
+
+/**
+ * @type {Database}
+ */
 let db = JSON.parse(await fs.readFile("./database.json"));
 
 async function validateUser(email, password) {
@@ -78,30 +99,63 @@ async function createUser(email, password, name) {
 }
 
 // index page
-app.get('/', function (req, res) {
+app.get('/', function (_, res) {
     console.log("==> Requesting home");
 
     res.render("pages/home", { user });
 });
 
-app.get("/login", function (req, res) {
+app.get("/login", function (_, res) {
     console.log("==> Requesting login");
     if (authUser()) res.render("pages/home", { user });
 
     res.render('pages/login');
 });
 
-app.get("/monthly_stats", function (req, res) {
+app.get("/monthly_stats", function (_, res) {
     console.log("==> Monthly stats!");
     if (!authUser()) {
         res.redirect("/login");
         return;
     }
 
+    const todays_date = new Date();
+    const months_start = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), 1);
+
+    if (user.id in db.records) {
+        const user_records = Object.keys(db.records[user.id]);
+        let index = -1;
+
+        for (let i = 0; i < user_records.length; i++) {
+            if (user_records[i] >= months_start) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index > 0) return;
+
+        const month_activities = user_records.slice(index);
+        let res = {};
+
+        for (let i = 0; i < month_activities.length; i++) {
+            const day_activities = db.records[user.id][month_activities[i]];
+            let saved_water = 0; 
+
+            for (let j = 0; j < day_activities.length; j++) {
+                saved_water += day_activities[j];
+            }
+
+            res[month_activities[i]] = saved_water;
+        }
+        
+        res.render("pages/month", { user, month: res });
+    }
+
     res.render("pages/month", { user });
 });
 
-app.get("/data_entry", function (req, res) {
+app.get("/data_entry", function (_, res) {
     console.log("==> Data entry!");
     if (!authUser()) {
         res.redirect("/login");
@@ -109,6 +163,41 @@ app.get("/data_entry", function (req, res) {
     }
 
     res.render("pages/data", { user, activities });
+});
+
+app.post("/add_activity", async function (req, res) {
+    console.log("==> Adding activity!");
+
+    if (!authUser()) {
+        res.redirect("/login");
+        return;
+    }
+
+    try {
+        let user_records = {};
+
+        if (user.id in db.records) {
+            user_records = db.records[user.id];
+        }
+
+        const todays_date = new Date();
+        const date = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), todays_date.getUTCDate())
+
+        if (date in user_records) {
+            user_records[date].push(parseFloat(req.body.water, 10))
+        } else {
+            user_records[date] = [parseFloat(req.body.water, 10)]
+        }
+
+
+        db.records[user.id] = user_records;
+
+        await fs.writeFile("./database.json", JSON.stringify(db));
+
+        res.redirect("/data_entry?success=true");
+    } catch (err) {
+        res.redirect("/data_entry");
+    }
 });
 
 app.post("/auth/login", async function (req, res) {
