@@ -90,6 +90,10 @@ app.get("/login", function (req, res) {
 
     res.render('pages/login');
 });
+app.get("/register", function (req, res) {
+    console.log("==> Requesting registration");
+    res.render('pages/register');
+});
 
 app.get("/monthly_stats", function (req, res) {
     console.log("==> Monthly stats!");
