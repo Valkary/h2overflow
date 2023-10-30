@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 let user = {
     email: "",
     name: "",
+    lastname: "",
+    unit: "",
+    lang: "",
     id: "",
 };
 
@@ -26,6 +29,9 @@ async function validateUser(email, password) {
         if (await bcrypt.compare(password, db.users[email].password)) {
             user.email = email;
             user.name = db.users[email].name;
+            user.lastname = db.users[email].lastname;
+            user.unit = db.users[email].unit;
+            user.lang = db.users[email].lang;
             user.id = db.users[email].id;
 
             console.log(`Succesfully logged in as ${db.users[email].name}!`);
