@@ -153,7 +153,7 @@ app.get("/monthly_stats", function (_, res) {
         if (index > 0) return;
 
         const month_activities = user_records.slice(index);
-        let res = {};
+        let result = {};
 
         for (let i = 0; i < month_activities.length; i++) {
             const day_activities = db.records[user.id][month_activities[i]];
@@ -163,10 +163,11 @@ app.get("/monthly_stats", function (_, res) {
                 saved_water += day_activities[j];
             }
 
-            res[month_activities[i]] = saved_water;
+            result[month_activities[i]] = saved_water;
         }
 
-        res.render("pages/month", { user, month: res });
+        res.render("pages/month", { user, month: result });
+        return;
     }
 
     res.render("pages/month", { user });
@@ -205,7 +206,6 @@ app.post("/add_activity", async function (req, res) {
         } else {
             user_records[date] = [parseFloat(req.body.water, 10)]
         }
-
 
         db.records[user.id] = user_records;
 
