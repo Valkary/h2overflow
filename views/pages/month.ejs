@@ -23,9 +23,14 @@
       <div id="progress-bar" class="progress-bar" style="width: 17%"></div>
     </div>
 
-    <div class="container text-center histogram">
+    <div class="container text-center histogram mt-5">
       <div class="row bars" id="graph"></div>
       <div class="row x-axis" id="dates"></div>
+    </div>
+
+    <div class="container mt-5">
+      <h1>Recent activity</h1>
+      <div id="activities" class="d-flex justify-content-around flex-wrap"></div>
     </div>
   </div>
 
@@ -34,14 +39,19 @@
     const months_start = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), 1);
     const bar_graph = document.querySelector("#graph");
     const dates = document.querySelector("#dates");
+    const activities_div = document.querySelector("#activities");
 
-    const month_stats = '<%- JSON.stringify(month) %>';
-    const month = JSON.parse(month_stats);
+    const month = JSON.parse('<%- JSON.stringify(month) %>');
+    const activities = JSON.parse('<%- JSON.stringify(activities) %>');
 
-    const max_val = Math.max(...Object.values(month));
+    const values = Object.values(month);
 
-    const diff_days = Math.floor((todays_date - months_start) / (1000*60*60*24));
-    
+    const activities_month = [...values.flatMap(item => item.activities)];
+    const max_val = Math.max(...values.map(item => item.saved_water));
+    const diff_days = Math.ceil((todays_date - months_start) / (1000*60*60*24));
+
+    console.log(activities)
+
     for (let i = 0; i < diff_days; i++) {
       const curr_date = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), 1+i);
       const display_date = ((new Date(curr_date)).toUTCString()).split(" ");
@@ -56,11 +66,33 @@
       date_div.innerText = `${display_date[1]}`;
       
       if (curr_date in month) {
-        bar_div.style.height = `${month[curr_date] * 100 / max_val}%`;
+        bar_div.style.height = `${month[curr_date].saved_water * 100 / max_val}%`;
       }
 
       bar_graph.appendChild(bar_div);
       dates.appendChild(date_div);
+    }
+
+    for (let i = 0; i < activities_month.length; i++) {
+      const activity_div = document.createElement("div");
+
+      activity_div.className = "card mb-3";
+      activity_div.style = "width: 45%;"
+
+      activity_div.innerHTML = `
+        <div class="row g-0 p-5">
+          <div class="col-md-4">
+            <img src="${activities[activities_month[i]].img}" class="img-fluid rounded-start" alt="${activities[activities_month[i]].img_alt}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">${activities[activities_month[i]].name}</h5>
+            </div>
+          </div>
+        </div>
+      `
+
+      activities_div.appendChild(activity_div);
     }
   </script>
 
