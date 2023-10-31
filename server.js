@@ -135,6 +135,10 @@ app.get("/login", function (_, res) {
 
     res.render('pages/login');
 });
+app.get("/register", function (req, res) {
+    console.log("==> Requesting registration");
+    res.render('pages/register');
+});
 
 app.get("/monthly_stats", function (_, res) {
     console.log("==> Monthly stats!");
