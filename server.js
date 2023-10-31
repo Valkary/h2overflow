@@ -27,7 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 *   },
 *   records: {
 *     [userId: string]: {
-*       [timestamp: number]: [number]
+*       activities: [number],
+*       water: [number]
 *     }
 *   }
 * }} Database
@@ -159,14 +160,19 @@ app.get("/monthly_stats", function (_, res) {
             const day_activities = db.records[user.id][month_activities[i]];
             let saved_water = 0;
 
-            for (let j = 0; j < day_activities.length; j++) {
-                saved_water += day_activities[j];
+            console.log(day_activities);
+
+            for (let j = 0; j < day_activities.activities.length; j++) {
+                saved_water += day_activities.water[j];
             }
 
-            result[month_activities[i]] = saved_water;
+            result[month_activities[i]] = {
+                activities: [...day_activities.activities],
+                saved_water
+            };
         }
 
-        res.render("pages/month", { user, month: result });
+        res.render("pages/month", { user, month: result, activities });
         return;
     }
 
@@ -202,9 +208,13 @@ app.post("/add_activity", async function (req, res) {
         const date = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), todays_date.getUTCDate())
 
         if (date in user_records) {
-            user_records[date].push(parseFloat(req.body.water, 10))
+            user_records[date].activities.push(parseFloat(req.body.activity, 10));
+            user_records[date].water.push(parseFloat(req.body.water, 10));
         } else {
-            user_records[date] = [parseFloat(req.body.water, 10)]
+            user_records[date] = {
+                activities: [parseFloat(req.body.activity, 10)],
+                water: [parseFloat(req.body.water, 10)]
+            };
         }
 
         db.records[user.id] = user_records;
@@ -214,6 +224,7 @@ app.post("/add_activity", async function (req, res) {
         res.redirect("/data_entry?success=true");
     } catch (err) {
         res.redirect("/data_entry");
+        console.error(err);
     }
 });
 

@@ -199,6 +199,7 @@
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <form action="/add_activity" method="post">
                 <input type="hidden" value="<%= activities[i].saved_water %>" name="water" />
+                <input type="hidden" value="<%= i %>" name="activity" />
                 <button type="submit" class="btn btn-primary">Done</button>
               </form>
             </div>
