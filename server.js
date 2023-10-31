@@ -38,7 +38,9 @@ app.use(express.urlencoded({ extended: true }));
 * @typedef {{
 *   email: string,
 *   name: string,
-*   id: string
+*   id: string,
+*   unit: string,
+*   lang: string,
 * }} User
 */
 
@@ -93,7 +95,7 @@ function authUser() {
     return true;
 }
 
-async function createUser(email, password, name) {
+async function createUser(email, password, name, lastname) {
     if (email in db.users) {
         console.error("==> User already in database!");
         return false;
@@ -107,6 +109,7 @@ async function createUser(email, password, name) {
         db.users[email] = {
             id: id_count + 1,
             name,
+            lastname,
             password: hash
         }
 
@@ -135,6 +138,7 @@ app.get("/login", function (_, res) {
 
     res.render('pages/login');
 });
+
 app.get("/register", function (req, res) {
     console.log("==> Requesting registration");
     res.render('pages/register');
@@ -142,6 +146,7 @@ app.get("/register", function (req, res) {
 
 app.get("/monthly_stats", function (_, res) {
     console.log("==> Monthly stats!");
+
     if (!authUser()) {
         res.redirect("/login");
         return;
@@ -150,43 +155,45 @@ app.get("/monthly_stats", function (_, res) {
     const todays_date = new Date();
     const months_start = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), 1);
 
-    if (user.id in db.records) {
-        const user_records = Object.keys(db.records[user.id]);
-        let index = -1;
-
-        for (let i = 0; i < user_records.length; i++) {
-            if (user_records[i] >= months_start) {
-                index = i;
-                break;
-            }
-        }
-
-        if (index > 0) return;
-
-        const month_activities = user_records.slice(index);
-        let result = {};
-
-        for (let i = 0; i < month_activities.length; i++) {
-            const day_activities = db.records[user.id][month_activities[i]];
-            let saved_water = 0;
-
-            console.log(day_activities);
-
-            for (let j = 0; j < day_activities.activities.length; j++) {
-                saved_water += day_activities.water[j];
-            }
-
-            result[month_activities[i]] = {
-                activities: [...day_activities.activities],
-                saved_water
-            };
-        }
-
-        res.render("pages/month", { user, month: result, activities });
-        return;
+    if (!(user.id in db.records)) {
+        db.records[user.id] = {}
     }
 
-    res.render("pages/month", { user });
+    const user_records = Object.keys(db.records[user.id]);
+    let index = -1;
+
+    for (let i = 0; i < user_records.length; i++) {
+        if (user_records[i] >= months_start) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index > 0) {
+        console.info("No activities found for this user!");
+        res.render("pages/month", { user, month: {}, activities });
+        return;
+    };
+
+    const month_activities = user_records.slice(index);
+    let result = {};
+
+    for (let i = 0; i < month_activities.length; i++) {
+        const day_activities = db.records[user.id][month_activities[i]];
+        let saved_water = 0;
+
+        for (let j = 0; j < day_activities.activities.length; j++) {
+            saved_water += day_activities.water[j];
+        }
+
+        result[month_activities[i]] = {
+            activities: [...day_activities.activities],
+            saved_water
+        };
+    }
+
+    res.render("pages/month", { user, month: result, activities });
+    return;
 });
 
 app.get("/data_entry", function (_, res) {
@@ -239,7 +246,7 @@ app.post("/add_activity", async function (req, res) {
 });
 
 app.post("/auth/login", async function (req, res) {
-    console.log("Requesting auth");
+    console.log("==> Requesting auth");
 
     if (req.body?.email && req.body?.password) {
         if (await validateUser(req.body.email, req.body.password)) {
@@ -251,14 +258,32 @@ app.post("/auth/login", async function (req, res) {
     res.redirect("/");
 });
 
+app.post("/auth/register", async function (req, res) {
+    console.log("==> Requesting register auth");
+
+    const { name, lastnames, email, password } = req.body;
+
+    if (name === "" || lastnames === "" || email === "" || password === "") return res.redirect("/register");
+
+    console.log("Creating user in database...");
+
+    if (createUser(email, password, name, lastnames)) {
+        console.log("User created succesfully!");
+        res.redirect("/login");
+    } else {
+        console.log("Error creating user!");
+        res.redirect("/register");
+    }
+});
+
 app.get('/profile', function (req, res) {
     if (!authUser()) {
         res.redirect("/login");
         return;
     }
 
-    res.render("pages/profile", {user});
-}).post('/save_settings', async function(req,res) {
+    res.render("pages/profile", { user });
+}).post('/save_settings', async function (req, res) {
     console.log("==> Save settings!");
 
     const { firstname, lastname, email, unit, lang } = req.body;
@@ -276,16 +301,23 @@ app.get('/profile', function (req, res) {
             unit,
             lang
         }
-        
-        user.email = email;
-    
+
+        user = {
+            ...user,
+            name: firstname,
+            lastname,
+            email,
+            lang,
+            unit
+        };
+
         await fs.writeFile("./database.json", JSON.stringify(db));
     } catch (err) {
         console.error(err);
         res.render("pages/profile");
     }
 
-    res.render("pages/profile", {user});
+    res.render("pages/profile", { user });
 }).post("/logout", function (_, res) {
     user = {
         email: "",

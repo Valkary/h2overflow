@@ -50,8 +50,6 @@
     const max_val = Math.max(...values.map(item => item.saved_water));
     const diff_days = Math.ceil((todays_date - months_start) / (1000*60*60*24));
 
-    console.log(activities)
-
     for (let i = 0; i < diff_days; i++) {
       const curr_date = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), 1+i);
       const display_date = ((new Date(curr_date)).toUTCString()).split(" ");
@@ -60,13 +58,13 @@
       const date_div = document.createElement('div');
 
       bar_div.className = "col bar";
-      bar_div.id = `bar-${i}`;
+      bar_div.id = `bar-${i+1}`;
 
       date_div.className = "col";
       date_div.innerText = `${display_date[1]}`;
       
       if (curr_date in month) {
-        bar_div.style.height = `${month[curr_date].saved_water * 100 / max_val}%`;
+        bar_div.style.height = `${Math.floor(month[curr_date].saved_water * 100 / max_val)}%`;
       }
 
       bar_graph.appendChild(bar_div);

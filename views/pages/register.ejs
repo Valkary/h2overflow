@@ -24,10 +24,14 @@
                     <img src="/images/logo.png" height="150px" alt="logo" loading="eager">
                 </div>
 
-                <form action="/auth/login" method="post">
+                <form action="/auth/register" method="post">
                     <div class="mb-4">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="pep34" required>
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="name" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="lastnames" class="form-label">Last names</label>
+                        <input type="text" class="form-control" name="lastnames" id="lastnames" placeholder="lastnames" required>
                     </div>
                     <div class="mb-4">
                         <label for="email" class="form-label">Email</label>
@@ -36,10 +40,6 @@
                     <div class="mb-4">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" name="password" id="password" placeholder="super_secure_password123" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="confirmpassword" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" placeholder="Repeat the password" required>
                     </div>
 
                     <div class="d-grid">
