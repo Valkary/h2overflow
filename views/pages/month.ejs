@@ -23,118 +23,76 @@
       <div id="progress-bar" class="progress-bar" style="width: 17%"></div>
     </div>
 
-    <div class="container text-center histogram">
-      <div class="row bars">
-        <div id="bar-1" class="col bar"></div>
-        <div id="bar-2" class="col bar"></div>
-        <div id="bar-3" class="col bar"></div>
-        <div id="bar-4" class="col bar"></div>
-        <div id="bar-5" class="col bar"></div>
-        <div id="bar-6" class="col bar"></div>
-        <div id="bar-7" class="col bar"></div>
-        <div id="bar-8" class="col bar"></div>
-        <div id="bar-9" class="col bar"></div>
-        <div id="bar-10" class="col bar"></div>
-        <div id="bar-11" class="col bar"></div>
-        <div id="bar-12" class="col bar"></div>
-      </div>
-      <div class="row x-axis">
-        <div class="col">01 sep</div>
-        <div class="col">02 sep</div>
-        <div class="col">03 sep</div>
-        <div class="col">04 sep</div>
-        <div class="col">05 sep</div>
-        <div class="col">06 sep</div>
-        <div class="col">07 sep</div>
-        <div class="col">08 sep</div>
-        <div class="col">09 sep</div>
-        <div class="col">10 sep</div>
-        <div class="col">11 sep</div>
-        <div class="col">12 sep</div>
-      </div>
+    <div class="container text-center histogram mt-5">
+      <div class="row bars" id="graph"></div>
+      <div class="row x-axis" id="dates"></div>
     </div>
-    
-    <div id="activity-list" class="activities"/>
+
+    <div class="container mt-5">
+      <h1>Recent activity</h1>
+      <div id="activities" class="d-flex justify-content-around flex-wrap"></div>
+    </div>
   </div>
 
   <script>
-    const bars = document.querySelectorAll(".bar");
-    const progress_text = document.querySelector("#progress-text");
-    const progress_bar = document.querySelector("#progress-bar");
-    const activity_list = document.querySelector("#activity-list");
+    const todays_date = new Date();
+    const months_start = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), 1);
+    const bar_graph = document.querySelector("#graph");
+    const dates = document.querySelector("#dates");
+    const activities_div = document.querySelector("#activities");
 
-    const activities = [
-      {
-        name: "plumbing",
-        title: "Was plumbing ready!",
-        description: "Fixed the pipes",
-        img: "/svgs/pipe.svg"
-      },
-      {
-        name: "dishwasher",
-        title: "Used the dishwasher correctly!",
-        description: "Loaded the dishwasher completely",
-        img: "/svgs/dishwasher.svg"
-      },
-      {
-        name: "water tap",
-        title: "Kept water from leaking!",
-        description: "Kept all water taps closed when not in use",
-        img: "/svgs/water-tap.svg"
-      },
-      {
-        name: "shower",
-        title: "Responsable shower!",
-        description: "Took a shower under 5 minutes",
-        img: "/svgs/shower.svg"
-      },
-      {
-        name: "dishes",
-        title: "Didn't waste water while cleaning the dishes!",
-        description: "Cleaned the dishes limiting the use of water",
-        img: "/svgs/plate.svg"
-      },
-      {
-        name: "washing maching",
-        title: "Used the washing machine correctly!",
-        description: "Loaded the washing machine completely before using it",
-        img: "/svgs/washing-machine.svg"
-      },
-    ];
+    const month = JSON.parse('<%- JSON.stringify(month) %>');
+    const activities = JSON.parse('<%- JSON.stringify(activities) %>');
 
-    const progress = Math.floor(Math.random() * 80 + 20);
-    const litres = 20 * progress / 100;
+    const values = Object.values(month);
 
-    progress_text.innerText = `${litres} liters, ${progress}% of your current goal!`;
-    progress_bar.style.width = `${progress}%`
+    const activities_month = [...values.flatMap(item => item.activities)];
+    const max_val = Math.max(...values.map(item => item.saved_water));
+    const diff_days = Math.ceil((todays_date - months_start) / (1000*60*60*24));
 
-    for (bar of bars) {
-      const height = Math.floor(Math.random() * 150) + 25;
-      bar.style.height = `${height}px`;
+    console.log(activities)
+
+    for (let i = 0; i < diff_days; i++) {
+      const curr_date = Date.UTC(todays_date.getFullYear(), todays_date.getUTCMonth(), 1+i);
+      const display_date = ((new Date(curr_date)).toUTCString()).split(" ");
+
+      const bar_div = document.createElement('div');
+      const date_div = document.createElement('div');
+
+      bar_div.className = "col bar";
+      bar_div.id = `bar-${i}`;
+
+      date_div.className = "col";
+      date_div.innerText = `${display_date[1]}`;
+      
+      if (curr_date in month) {
+        bar_div.style.height = `${month[curr_date].saved_water * 100 / max_val}%`;
+      }
+
+      bar_graph.appendChild(bar_div);
+      dates.appendChild(date_div);
     }
 
-    for (let i = 0; i < 15; i++) {
-      const activity_id = Math.floor(Math.random() * activities.length);
-      const div = document.createElement('div');
+    for (let i = 0; i < activities_month.length; i++) {
+      const activity_div = document.createElement("div");
 
-      div.className = "card mb-3";
-      div.style = "width: 45%;"
+      activity_div.className = "card mb-3";
+      activity_div.style = "width: 45%;"
 
-      div.innerHTML = `
-        <div class="row g-0">
+      activity_div.innerHTML = `
+        <div class="row g-0 p-5">
           <div class="col-md-4">
-            <img src="${activities[activity_id].img}" class="img-fluid rounded-start" alt="${activities[activity_id].name}">
+            <img src="${activities[activities_month[i]].img}" class="img-fluid rounded-start" alt="${activities[activities_month[i]].img_alt}">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">${activities[activity_id].title}</h5>
-              <p class="card-text">${activities[activity_id].description}</p>
+              <h5 class="card-title">${activities[activities_month[i]].name}</h5>
             </div>
           </div>
         </div>
-      `;
+      `
 
-      activity_list.appendChild(div);
+      activities_div.appendChild(activity_div);
     }
   </script>
 </div>

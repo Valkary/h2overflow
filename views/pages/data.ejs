@@ -19,45 +19,20 @@
           <h2 class="text-center">Update your daily usage</h2>
 
           <div class="container gap-4">
-            <div class="row my-3">
-              <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Fixed plumbing">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#plumbingModal">
-                  <img src="../svgs/pipe.svg" alt="pipesss" width="100%">
-                </button>
+            <% for (let j = 0; j < activities.length / 3; j++) { %>
+              <div class="row my-3">
+              <% for (let i = 0; i < activities.length / 2; i++) { %>
+                <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="<%= activities[i+j*3].name %>">
+                  <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#<%= `${activities[i+j*3].modal_id}Modal` %>">
+                    <img src="<%= activities[i+j*3].img %>" alt="<%= activities[i+j*3].img_alt %>" width="100%">
+                  </button>
+                </div>
+              <% } %>
               </div>
-              <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="top"
-                data-bs-title="Shower under 5 min">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#showerModal">
-                  <img src="../svgs/shower.svg" alt="shower" width="100%">
-                </button>
-              </div>
-              <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Dishwasher">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
-                  <img src="../svgs/dishwasher.svg" alt="dishwasher" width="100%">
-                </button>
-              </div>
-            </div>
-
-            <div class="row my-3">
-              <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Water tap">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
-                  <img src="../svgs/water-tap.svg" alt="tap" width="100%">
-                </button>
-              </div>
-              <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clean dishes">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
-                  <img src="../svgs/plate.svg" alt="plates" width="100%">
-                </button>
-              </div>
-              <div class="col col-4" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Wash hands">
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#activityModal">
-                  <img src="../svgs/hand-washsvg.svg" alt="hand wash" width="100%">
-                </button>
-              </div>
-            </div>
-
+            <% } %>
           </div>
         </div>
+
         <div class="col-12 col-md-6">
           <h2 class="text-center">Activities to reduce water usage</h2>
 
@@ -208,59 +183,30 @@
       </div>
     </div>
 
-    <div class="modal fade" id="plumbingModal" tabindex="-1" aria-labelledby="plumbingModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="plumbingModalLabel">Fixed the plumbing</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            Mark done to notify that you have fixed the leaks in your plumbing systems
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Done</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="showerModal" tabindex="-1" aria-labelledby="showerModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="showerModalLabel">Took a shower in 5 minutes or less</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            Mark done to notify that you have taken a water friendly shower
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Done</button>
+    <% for (let i = 0; i < activities.length; i++) { %>
+      <div class="modal fade" id="<%= `${activities[i].modal_id}Modal` %>" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="activityModalLabel"><%= activities[i].name %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <%= activities[i].description %>
+              Liters saved: <%= activities[i].saved_water %>L
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <form action="/add_activity" method="post">
+                <input type="hidden" value="<%= activities[i].saved_water %>" name="water" />
+                <input type="hidden" value="<%= i %>" name="activity" />
+                <button type="submit" class="btn btn-primary">Done</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="activityModalLabel">Activity modal example</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            This is an example modal
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Done</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <% } %>
 
 
     <script>
