@@ -5,8 +5,7 @@ const port = 3000;
 
 app.use(express.static('public'));
 
-app.get('/', function (req, res) {
-    console.log("Here!");
+app.get('/api/test', function (req, res) {
     res.status(200).json({ ok: true, msg: "here" });
 });
 

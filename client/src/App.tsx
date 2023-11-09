@@ -8,7 +8,7 @@ function App() {
 
   useEffect(() => {
     async function test() {
-      const data = await fetch('/api/');
+      const data = await fetch('/api/test');
       console.log("Doing Api request!");
       console.log(await data.json());
     }
