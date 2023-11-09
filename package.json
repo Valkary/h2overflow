@@ -12,7 +12,7 @@
     "server": "cd server && npm start",
     "client": "cd client && npm run dev",
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
-    "build": "cd client && npm run build && mv dist/* ../server/public/"
+    "build": "cd client && npm run build"
   },
   "keywords": [],
   "author": "",
