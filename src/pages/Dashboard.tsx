@@ -1,3 +1,4 @@
+import Modal from "@/components/sections/Modal";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +11,7 @@ export default function Dashboard() {
         if (!user) navigate("/login");
     }, []);
 
-    return <section className="bg-green-300 flex-grow">
-        <h1>Add activity</h1>
+    return <section className="flex-grow">
+        <Modal />
     </section>
 }
