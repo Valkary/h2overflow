@@ -6,7 +6,8 @@ type User = {
     name: string,
     last_names: string,
     units: string | null,
-    language: string | null
+    language: string | null,
+    profile_picture: string | null,
 }
 
 type LoginCredentials = {
@@ -43,7 +44,8 @@ export default function AuthContextProvider({ children, }: { children: React.Rea
                 last_names: "Salcedo Uribe",
                 language: "english",
                 token: "asdasdas",
-                units: "kg"
+                units: "kg",
+                profile_picture: null
             })
         } catch (err) {
             console.error(err);
