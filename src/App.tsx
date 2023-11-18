@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/sections/Navbar";
+import Home from "./pages/Home";
 
 export default function App() {
   const { user } = useContext(AuthContext);
@@ -16,7 +17,7 @@ export default function App() {
         <Route path="/" element={
           <>
             <Navbar />
-            <>au</>
+            <Home />
           </>
         } />
         <Route path="/login" element={<Login />} />
