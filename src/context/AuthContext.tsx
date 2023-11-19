@@ -2,12 +2,12 @@ import { createContext, useState } from 'react';
 
 type User = {
     username: string,
-    token: string,
     name: string,
     last_names: string,
     units: string | null,
     language: string | null,
     profile_picture: string | null,
+    token: string,
 }
 
 type LoginCredentials = {
@@ -15,10 +15,20 @@ type LoginCredentials = {
     password: string
 }
 
+type RegisterCredentials = {
+    username: string,
+    password: string,
+    email: string,
+    last_names: string,
+    name: string,
+    units: "Lt" | "Gal",
+    language: "English" | "Spanish",
+}
+
 type AuthContext = {
     user: User | null,
     login: (creds: LoginCredentials) => void,
-    signin: () => void,
+    signin: (creds: RegisterCredentials) => void,
     update: () => void
 }
 
@@ -33,10 +43,7 @@ export default function AuthContextProvider({ children, }: { children: React.Rea
     const [user, setUser] = useState<User | null>(null);
 
     function login(creds: LoginCredentials) {
-        console.log("==> Attempting to log in", creds);
-
-        // Lamada al server
-
+        // TODO: llamada al servidor para iniciar sesión
         try {
             setUser({
                 username: "Pepe",
@@ -52,8 +59,9 @@ export default function AuthContextProvider({ children, }: { children: React.Rea
         }
     }
 
-    function signin() {
-
+    function signin(creds: RegisterCredentials) {
+        // TODO: llamada al servidor para crear un usuario
+        console.log(creds);
     }
 
     function update() {
