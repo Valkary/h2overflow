@@ -23,6 +23,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 const loginFormSchema = z.object({
     email: z.string().email("Must be a valid email"),
@@ -40,7 +41,8 @@ const registerFormSchema = z.object({
 })
 
 export default function Login() {
-    const { user, login, signin } = useContext(AuthContext);
+    const { toast } = useToast();
+    const { user, login, signin, error } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const loginForm = useForm<z.infer<typeof loginFormSchema>>({
@@ -65,8 +67,17 @@ export default function Login() {
     });
 
     useEffect(() => {
+        if (error) {
+            toast({
+                title: "Error",
+                description: error.msg,
+                variant: "destructive",
+                duration: 3000
+            });
+        }
+
         if (user) navigate("/profile");
-    }, [user]);
+    }, [user, error]);
 
     return <section className=" bg-cover bg-no-repeat bg-water h-[100vh] w-[100vw] overflow-hidden flex justify-center items-center">
         <div className="p-5 flex flex-col items-center justify-center bg-white w-[80%] sm:w-2/3 md:w-1/2 lg:w-1/3 rounded-lg">

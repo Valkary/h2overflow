@@ -11,6 +11,6 @@ export default function Profile() {
     }, []);
 
     return <section className="bg-blue-300 flex-grow">
-
+        Hello {user?.name} {user?.last_names}
     </section>
 }
