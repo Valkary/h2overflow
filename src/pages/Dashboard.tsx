@@ -1,4 +1,4 @@
-import Modal from "@/components/sections/Modal";
+import Modal from "@/components/sections/CreateActivityModal";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

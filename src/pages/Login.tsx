@@ -38,7 +38,7 @@ const registerFormSchema = z.object({
     last_names: z.string().min(3, "Name must be at least 5 characters long").max(45, "Maximum limit exceded"),
     language: z.enum(["English", "Spanish"]),
     units: z.enum(["Lt", "Gal"]),
-})
+});
 
 export default function Login() {
     const { toast } = useToast();
