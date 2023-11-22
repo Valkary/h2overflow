@@ -24,6 +24,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { LogIn, UserPlus } from "lucide-react";
 
 const loginFormSchema = z.object({
     email: z.string().email("Must be a valid email"),
@@ -76,7 +77,7 @@ export default function Login() {
             });
         }
 
-        if (user) navigate("/profile");
+        if (user) navigate("/dashboard");
     }, [user, error]);
 
     return <section className=" bg-cover bg-no-repeat bg-water h-[100vh] w-[100vw] overflow-hidden flex justify-center items-center">
@@ -129,7 +130,10 @@ export default function Login() {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" className="w-1/3">Sign in!</Button>
+                                <Button type="submit">
+                                    <LogIn className="mr-2 h-4 w-4" />
+                                    Sign in!
+                                </Button>
                             </form>
                         </Form>
                     </TabsContent>
@@ -270,7 +274,10 @@ export default function Login() {
                                         )}
                                     />
                                 </div>
-                                <Button type="submit" className="w-1/3">Sign up!</Button>
+                                <Button type="submit">
+                                    <UserPlus className="mr-2 h-4 w-4" />
+                                    Sign up!
+                                </Button>
                             </form>
                         </Form>
                     </TabsContent>

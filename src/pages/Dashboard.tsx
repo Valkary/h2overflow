@@ -1,11 +1,11 @@
 import Modal from "@/components/sections/CreateActivityModal";
 import { AuthContext } from "@/context/AuthContext";
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { differenceInCalendarDays, format } from "date-fns";
 import { BarChart, Card, Metric, Subtitle, Title } from "@tremor/react";
 import { activities } from "@/constants";
+import { h2overflowApi } from "@/h2overflowApi";
 
 type DatabaseActivities = {
     _id: string,
@@ -56,7 +56,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     async function fetchMonthStats() {
-        const fetch = await axios.get("http://localhost:3000/api/activities/month", {
+        const fetch = await h2overflowApi.get("/activities/month", {
             headers: {
                 Authorization: user?.token
             }
