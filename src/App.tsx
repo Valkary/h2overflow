@@ -12,7 +12,7 @@ export default function App() {
   const { user } = useContext(AuthContext);
 
   return <BrowserRouter>
-    <div className="w-[100vw] min-h-[100vh] flex flex-col">
+    <div className="w-full min-h-[100vh] flex flex-col">
       <Routes>
         <Route path="/" element={
           <>
