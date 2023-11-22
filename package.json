@@ -2,7 +2,7 @@
   "name": "h2overflow_server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec ts-node-esm src/server.ts",
