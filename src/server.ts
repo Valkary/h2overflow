@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import { Activity, User, UserLoginType, UserType, user_login_schema, user_object_schema } from './types.js';
 import jwt from "jsonwebtoken";
 import cors from "cors";
+import fileUpload, { UploadedFile } from "express-fileupload";
 
 const uri = `mongodb+srv://pepe:${process.env.DB_PASS}@cluster0.jxl1su3.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 await mongoose.connect(uri);
@@ -13,6 +14,7 @@ const app = express();
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload());
 const port = 3000;
 
 app.get('/', (_, res) => {
@@ -150,6 +152,66 @@ app.post("/api/activities/create", verifyJWT, async (req, res) => {
     })
 });
 
+app.post("/api/users/update", verifyJWT, async (req, res) => {
+    console.log("==> Updating user information...");
+    try {
+        const token = req.headers.authorization as string;
+        const user = jwt.decode(token) as UserType;
+        const partial_user = req.body as Partial<UserType>;
+
+        const update: Partial<UserType> = {};
+
+        console.log("==> Creating user update...");
+
+        if (req.files?.profile_picture) {
+            const file = req.files.profile_picture as UploadedFile;
+            const uploadPath = `uploads/${user.email}.${file.name.split(".")[1]}`;
+            file.mv(uploadPath);
+
+            console.log("==> Profile picture successfully uploaded!");
+            update.profile_picture = uploadPath;
+        } else {
+            console.log("No file under that name")
+        }
+
+        partial_user.name ? update.name = partial_user.name : null;
+        partial_user.last_names ? update.last_names = partial_user.last_names : null;
+        partial_user.password ? update.password = await bcrypt.hash(partial_user.password, 10) : null;
+        partial_user.username ? update.username = partial_user.username : null;
+
+        console.log("==> Updating user in database...");
+        let doc = await User.findOneAndUpdate({
+            email: user.email
+        }, update) as UserType;
+
+        const user_obj = {
+            email: doc.email,
+            name: doc.name,
+            last_names: doc.last_names,
+            username: doc.username,
+            profile_picture: doc.profile_picture,
+            units: doc.units,
+            language: doc.language
+        };
+
+        const new_token = jwt.sign(user_obj, process.env.JWT_SECRET as string);
+
+        console.log("==> User successfully updated in db!");
+        return res.status(200).json({
+            success: true,
+            token: new_token
+        });
+    } catch (err) {
+        console.log(err);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        })
+    }
+
+})
+
 app.get("/api/activities/month", verifyJWT, async (req, res) => {
     console.log("==> Retrieving user monthly activities...");
     const curr_date = new Date();
@@ -174,6 +236,31 @@ app.get("/api/activities/month", verifyJWT, async (req, res) => {
         success: true,
         month_activities
     })
+});
+
+app.get("/api/users/profile_picture", verifyJWT, async (req, res) => {
+    console.log("==> Retrieving user profile picture...");
+    try {
+        const token = req.headers.authorization as string;
+        const user = jwt.decode(token) as UserType;
+
+        const db_user = await User.findOne({
+            email: user.email,
+        }) as UserType;
+
+
+        const filePath = `${new URL('..', import.meta.url).pathname}${db_user.profile_picture}`.split("/C:/")[1];
+
+        console.log(filePath);
+        return res.status(200).sendFile(filePath, { root: '/' });
+    } catch (err) {
+        console.error(err);
+
+        return res.status(404).json({
+            success: false,
+            message: "No profile picture for this user"
+        })
+    }
 });
 
 app.listen(port, () => {
