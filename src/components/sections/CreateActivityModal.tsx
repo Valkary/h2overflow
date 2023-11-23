@@ -28,8 +28,8 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { activities } from "@/constants";
 import { useToast } from "../ui/use-toast";
-import axios from "axios";
 import { AuthContext } from "@/context/AuthContext";
+import { h2overflowApi } from "@/h2overflowApi";
 
 type Activity = {
     activity_id: number,
@@ -57,7 +57,7 @@ export default function Modal({ refetch }: Props) {
 
     async function createActivity() {
         try {
-            const request = await axios.post("http://localhost:3000/api/activities/create", { ...activity, created_at: date }, {
+            const request = await h2overflowApi.post("/activities/create", { ...activity, created_at: date }, {
                 headers: {
                     "authorization": user?.token
                 }

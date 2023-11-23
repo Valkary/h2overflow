@@ -3,7 +3,7 @@ import axios from "axios";
 export const h2overflowApi = axios.create({
     baseURL: import.meta.env.MODE === "development" ?
         "http://localhost:3000/api" :
-        "",
+        "https://h2overflow-server.onrender.com/api",
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
