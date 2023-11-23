@@ -244,15 +244,12 @@ app.get("/api/users/profile_picture", verifyJWT, async (req, res) => {
         const token = req.headers.authorization as string;
         const user = jwt.decode(token) as UserType;
 
+        // @ts-ignore
         const db_user = await User.findOne({
             email: user.email,
         }) as UserType;
 
-
-        const filePath = `${new URL('..', import.meta.url).pathname}${db_user.profile_picture}`.split("/C:/")[1];
-
-        console.log(filePath);
-        return res.status(200).sendFile(filePath, { root: '/' });
+        return res.status(200).sendFile(`${db_user.profile_picture}`, { root: "./" });
     } catch (err) {
         console.error(err);
 
