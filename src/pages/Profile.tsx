@@ -69,12 +69,16 @@ export default function Profile() {
         }
     }
 
-    return <section className="flex-grow flex justify-center">
+    return <section className="flex-grow flex justify-center px-5 lg:px-0">
         <div className="w-full md:w-5/6 lg:w-3/4 xl:w-2/3 min-h-full my-10">
             <div className="flex flex-row items-center gap-2">
                 <Metric>{user?.username}'s profile!</Metric>
             </div>
-            <div className="flex">
+            <div className="flex flex-col items-center">
+                <div className="flex lg:hidden w-1/2 h-full justify-center items-center px-5">
+                    <img src={user?.profile_picture ? user.profile_picture : "/no_pp.jpg"} alt="profile picture" className="rounded-full w-full h-auto aspect-square object-cover object-center" />
+                </div>
+
                 <Form {...updateForm}>
                     <form onSubmit={updateForm.handleSubmit(update)} className="space-y-8 w-full">
                         <FormField
@@ -172,7 +176,7 @@ export default function Profile() {
                     </form>
                 </Form>
 
-                <div className="w-1/2 h-full flex justify-center items-center px-5">
+                <div className="hidden lg:flex w-1/2 h-full justify-center items-center px-5">
                     <img src={user?.profile_picture ? user.profile_picture : "/no_pp.jpg"} alt="profile picture" className="rounded-full w-full h-auto aspect-square object-cover object-center" />
                 </div>
             </div>

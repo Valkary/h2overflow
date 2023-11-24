@@ -81,7 +81,7 @@ export default function Login() {
     }, [user, error]);
 
     return <section className=" bg-cover bg-no-repeat bg-water h-[100vh] w-[100vw] overflow-hidden flex justify-center items-center">
-        <div className="p-5 flex flex-col items-center justify-center bg-white w-[80%] sm:w-2/3 md:w-1/2 lg:w-1/3 rounded-lg">
+        <div className="p-5 flex flex-col items-center justify-center bg-white w-full h-full sm:w-2/3 md:w-1/2 lg:w-1/3 rounded-lg">
             <div className="flex flex-col justify-center items-center w-full">
                 <div className="flex flex-shrink-0 items-center font-bold text-3xl">
                     <img src="/gota.png" className="object-cover object-center" width={25} />
