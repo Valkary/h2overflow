@@ -44,7 +44,15 @@ export const AuthContext = createContext<AuthContext>({
 });
 
 export default function AuthContextProvider({ children, }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>({
+        language: "",
+        last_names: "",
+        name: "",
+        profile_picture: "",
+        token: "",
+        units: "",
+        username:""
+    });
     const [error, setError] = useState<{ at: Date, msg: string } | null>(null);
 
     async function login(creds: LoginCredentials) {
