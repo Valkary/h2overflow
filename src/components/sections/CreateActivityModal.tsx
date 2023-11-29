@@ -24,20 +24,24 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { format } from "date-fns"
+import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { activities } from "@/constants";
 import { useToast } from "../ui/use-toast";
-import axios from "axios";
 import { AuthContext } from "@/context/AuthContext";
+import { h2overflowApi } from "@/h2overflowApi";
 
 type Activity = {
     activity_id: number,
     litters_saved: number,
 }
 
-export default function Modal() {
-    const [date, setDate] = useState<Date | null>(null);
+type Props = {
+    refetch: () => void
+}
+
+export default function Modal({ refetch }: Props) {
+    const [date, setDate] = useState<Date | undefined>(undefined);
     const [activity, setActivity] = useState<Activity | null>(null);
     const { toast } = useToast();
     const { user } = useContext(AuthContext);
@@ -53,7 +57,7 @@ export default function Modal() {
 
     async function createActivity() {
         try {
-            const request = await axios.post("http://localhost:3000/api/activities/create", { ...activity, date }, {
+            const request = await h2overflowApi.post("/activities/create", { ...activity, created_at: date }, {
                 headers: {
                     "authorization": user?.token
                 }
@@ -67,8 +71,10 @@ export default function Modal() {
                     duration: 3000
                 });
 
-                setDate(null);
+                setDate(undefined);
                 setActivity(null);
+
+                refetch();
             }
         } catch (err) {
             toast({
@@ -124,7 +130,7 @@ export default function Modal() {
                         <PopoverContent className="w-auto p-0" align="start">
                             <Calendar
                                 mode="single"
-                                selected={date}
+                                selected={date ?? new Date()}
                                 onSelect={setDate}
                                 initialFocus
                             />
