@@ -25,22 +25,27 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={
           user ?
-          <>
+            <>
               <Navbar />
               <Dashboard />
               <Footer />
             </> :
             <Navigate to="/login" />
-          } />
+        } />
         <Route path="/profile" element={
           user ?
-          <>
+            <>
               <Navbar />
               <Profile />
               <Footer />
             </> :
             <Navigate to={"/login"} />
         } />
+        <Route path="*" element={<>
+          <Navbar />
+          <div className="flex-grow">404 Not found</div>
+          <Footer />
+        </>} />
       </Routes>
     </div>
   </BrowserRouter>
