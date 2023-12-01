@@ -56,15 +56,7 @@ export const AuthContext = createContext<AuthContext>({
 });
 
 export default function AuthContextProvider({ children, }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<User | null>({
-        language: "",
-        last_names: "",
-        name: "",
-        profile_picture: "",
-        token: "",
-        units: "",
-        username:""
-    });
+    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<{ at: Date, msg: string } | null>(null);
 
     async function requestProfilePicture(token: string): Promise<string> {
