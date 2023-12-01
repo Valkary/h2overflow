@@ -3,7 +3,7 @@ export default function Home() {
     return <section className="bg-slate-400 flex-grow">
     <div className="w-full h-fit container grid p-0 bg-[#CFDEE7]">
       <div className="grid-rows-1">
-        <div className="columns-1 w-full aspect-[3.65/1] p-0 bg-black text-[#f0f8ff] flex justify-center items-center overflow-hidden">
+        <div className="columns-1 w-full aspect-[3.65/1] p-0 bg-black opacity-90 text-[#f0f8ff] flex justify-center items-center overflow-hidden hover:bg-blue-400">
           <div className="absolute font-medium text-4xl text-center">
             <h1>It's time we all do our part,</h1>
             <h1 className="inline">
@@ -13,7 +13,7 @@ export default function Home() {
               </a>
             </h1>
           </div>
-          <video className="w-full -z-[1]" autoPlay muted loop src="/video.mp4"/>
+          <video className="w-full -z-[1] brightness-50" autoPlay muted loop src="/video.mp4"/>
         </div>
       </div>
 
