@@ -73,7 +73,7 @@ export default function Dashboard() {
         fetchMonthStats();
     }, []);
 
-    return <section className="flex-grow flex flex-col items-center py-10">
+    return <section className="flex-grow flex flex-col items-center py-10 md:px-10">
         <div className="max-w-[96rem]">
             <div className="flex flex-row items-center gap-2">
                 <Metric color="blue">Dashboard |</Metric>
