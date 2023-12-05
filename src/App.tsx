@@ -7,17 +7,19 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/sections/Navbar";
 import Home from "./pages/Home";
+import Footer from "./components/sections/Footer";
 
 export default function App() {
   const { user } = useContext(AuthContext);
 
   return <BrowserRouter>
-    <div className="w-full min-h-[100vh] flex flex-col">
+    <div className="w-full flex flex-col">
       <Routes>
         <Route path="/" element={
           <>
             <Navbar />
             <Home />
+            <Footer />
           </>
         } />
         <Route path="/login" element={<Login />} />
@@ -26,17 +28,24 @@ export default function App() {
             <>
               <Navbar />
               <Dashboard />
+              <Footer />
             </> :
-            <Navigate to={"/login"} />
+            <Navigate to="/login" />
         } />
         <Route path="/profile" element={
           user ?
             <>
               <Navbar />
               <Profile />
+              <Footer />
             </> :
             <Navigate to={"/login"} />
         } />
+        <Route path="*" element={<>
+          <Navbar />
+          <div className="flex-grow">404 Not found</div>
+          <Footer />
+        </>} />
       </Routes>
     </div>
   </BrowserRouter>
